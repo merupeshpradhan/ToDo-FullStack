@@ -1,6 +1,6 @@
 import { useState } from "react";
-import TodoInput from "../Input/TodoInput";
 import { FaCheck } from "react-icons/fa";
+import TodoInput from "../../components/Input/TodoInput";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import { toast } from "react-toastify";
