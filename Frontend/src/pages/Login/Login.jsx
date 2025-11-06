@@ -1,11 +1,57 @@
 import { useState } from "react";
+import axios from "axios";
 import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const userLogin = async (e) => {
+    e.preventDefault();
+
+    // Loading toast
+    const toastId = toast.loading("Login to To-DO...");
+    try {
+      const res = await axios.post(
+        "http://localhost:4000/api/v1/users/login",
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
+
+      console.log("Login successfully!", res.data);
+
+      toast.update(toastId, {
+        render: "Wellcome to To-Do.",
+        type: "success",
+        isLoading: false,
+        autoClose: 2000,
+      });
+
+      setEmail("");
+      setPassword("");
+      navigate("/");
+    } catch (error) {
+      console.log("Login failed.", error);
+
+      toast.update(toastId, {
+        render: "Login failed.",
+        type: "error",
+        isLoading: false,
+        autoClose: 2000,
+      });
+
+      setEmail("");
+      setPassword("");
+    }
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-linear-to-t from-lime-200 to-cyan-400">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-[350px]">
@@ -16,7 +62,7 @@ function Login() {
           </div>
         </div>
 
-        <form>
+        <form onSubmit={userLogin}>
           {/* Username Email */}
           <input
             type="text"
