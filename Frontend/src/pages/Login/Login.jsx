@@ -36,6 +36,7 @@ function Login() {
 
       setEmail("");
       setPassword("");
+      setShowPassword("");
       navigate("/");
     } catch (error) {
       console.log("Login failed.", error);
@@ -46,14 +47,15 @@ function Login() {
         isLoading: false,
         autoClose: 2000,
       });
-
       setEmail("");
       setPassword("");
+      setShowPassword("");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-linear-to-t from-lime-200 to-cyan-400">
+    <div className="flex items-center justify-center min-h-screen bg-linear-to-t from-fuchsia-400 to-indigo-300
+">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-[350px]">
         {/* Top Icon */}
         <div className="flex justify-center mb-6">
@@ -93,7 +95,7 @@ function Login() {
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full bg-cyan-400 text-white font-semibold py-2 rounded-full hover:bg-cyan-500 transition-all duration-200 cursor-pointer"
+            className="w-full bg-cyan-400 text-white font-semibold py-2 rounded-full hover:bg-cyan-500 transition-all duration-300 cursor-pointer"
           >
             LOGIN
           </button>
