@@ -16,7 +16,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Import Route for start the website
+import userRoutes from "./routes/user.routes.js";
+import todoRoutes from "./routes/todo.routes.js";
+
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/todo", todoRoutes);
 
 // Import Error Handler
+import { errorHandler } from "./middlewares/error.middleware.js";
+
+app.use(errorHandler);
 
 export { app };
