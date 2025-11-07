@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function Signup() {
-  const [fullName, setFullName] = useState("");
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -21,7 +21,7 @@ function Signup() {
       const res = await axios.post(
         "http://localhost:4000/api/v1/users/signup",
         {
-          fullName,
+          userName,
           email,
           password,
         },
@@ -35,10 +35,9 @@ function Signup() {
         autoClose: 2000,
       });
 
-      setFullName("");
+      setUserName("");
       setEmail("");
       setPassword("");
-      setShowPassword("");
       navigate("/login");
     } catch (error) {
       console.log("for Signup somthing went wrong.", error);
@@ -48,10 +47,6 @@ function Signup() {
         isLoading: false,
         autoClose: 2000,
       });
-      setFullName("");
-      setEmail("");
-      setPassword("");
-      setShowPassword("");
     }
   };
   return (
@@ -69,8 +64,8 @@ function Signup() {
           <input
             type="text"
             placeholder="Full Name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
             className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
 
