@@ -16,9 +16,13 @@ function TodoInput() {
     const toastId = toast.loading("Creating To-Do...");
 
     try {
-      const res = await axios.post("http://localhost:4000/api/v1/users/to-do", {
-        inputData,
-      });
+      const res = await axios.post(
+        "http://localhost:4000/api/v1/todo",
+        {
+          title: inputData,
+        },
+        { withCredentials: true }
+      );
       console.log("To-Do Created successfully!", res.data);
 
       toast.update(toastId, {

@@ -38,7 +38,7 @@ function Signup() {
       setUserName("");
       setEmail("");
       setPassword("");
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.log("for Signup somthing went wrong.", error);
       toast.update(toastId, {
@@ -109,7 +109,7 @@ function Signup() {
         <p className="text-center text-gray-600 mt-3 md:mt-5 text-[14px] tracking-wide">
           Already have an account?{" "}
           <Link
-            to="/login"
+            to="/"
             className="text-green-500 md:font-semibold hover:underline"
           >
             Login

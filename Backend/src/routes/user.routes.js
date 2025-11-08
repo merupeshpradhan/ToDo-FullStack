@@ -10,6 +10,6 @@ const router = Router();
 
 router.route("/signup").post(userSignup);
 router.route("/login").post(userLogin);
-router.route("/logout").post(userLogout);
+router.route("/logout").post(authMiddleware, userLogout);
 
 export default router;

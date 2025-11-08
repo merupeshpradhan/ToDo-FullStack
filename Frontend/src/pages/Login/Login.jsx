@@ -27,6 +27,11 @@ function Login() {
 
       console.log("Login successfully!", res.data);
 
+      const userData = res.data.data;
+      const accessToken = res.data?.accessToken;
+      localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.setItem("accessToken", accessToken);
+
       toast.update(toastId, {
         render: "Wellcome to To-Do.",
         type: "success",
@@ -36,8 +41,8 @@ function Login() {
 
       setEmail("");
       setPassword("");
-      setShowPassword("");
-      navigate("/");
+      setShowPassword(false);
+      navigate("/todos");
     } catch (error) {
       console.log("Login failed.", error);
 
@@ -47,15 +52,14 @@ function Login() {
         isLoading: false,
         autoClose: 2000,
       });
-      setEmail("");
-      setPassword("");
-      setShowPassword("");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-linear-to-t from-fuchsia-400 to-indigo-300
-">
+    <div
+      className="flex items-center justify-center min-h-screen bg-linear-to-t from-fuchsia-400 to-indigo-300
+"
+    >
       <div className="bg-white p-8 rounded-2xl shadow-lg w-[350px]">
         {/* Top Icon */}
         <div className="flex justify-center mb-6">
