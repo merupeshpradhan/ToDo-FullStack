@@ -28,11 +28,15 @@ function Signup() {
         { withCredentials: true }
       );
 
+      const successMsg =
+        res.data?.message || "Signup successful! Please login.";
+
       toast.update(toastId, {
-        render: "Signup successful! Please login.",
+        render: successMsg,
         type: "success",
         isLoading: false,
-        autoClose: 2000,
+        autoClose: 3000,
+        style: { fontSize: "14px" },
       });
 
       setUserName("");
@@ -41,11 +45,17 @@ function Signup() {
       navigate("/");
     } catch (error) {
       console.log("for Signup somthing went wrong.", error);
+
+      const errorMsg =
+        error.response?.data?.message ||
+        "Something went wrong while signing up.";
+
       toast.update(toastId, {
-        render: "Somthing went wrong to Signup.",
+        render: errorMsg,
         type: "error",
         isLoading: false,
-        autoClose: 2000,
+        autoClose: 3000,
+        style: { fontSize: "14px" },
       });
     }
   };

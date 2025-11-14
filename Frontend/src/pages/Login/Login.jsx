@@ -32,11 +32,14 @@ function Login() {
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("accessToken", accessToken);
 
+      const successMsg = res.data?.message || "Login success";
+
       toast.update(toastId, {
-        render: "Wellcome to To-Do.",
+        render: successMsg,
         type: "success",
         isLoading: false,
-        autoClose: 2000,
+        autoClose: 4000,
+        style: { fontSize: "13px" },
       });
 
       setEmail("");
@@ -46,11 +49,15 @@ function Login() {
     } catch (error) {
       console.log("Login failed.", error);
 
+      const errorMsg =
+        error.response?.data?.message || "Login failed. Something went wrong.";
+
       toast.update(toastId, {
-        render: "Login failed.",
+        render: errorMsg,
         type: "error",
         isLoading: false,
         autoClose: 2000,
+        style: { fontSize: "13px" },
       });
     }
   };
