@@ -16,6 +16,6 @@ router
 
 router.route("/:todoId").delete(authMiddleware, deleteTodo);
 
-router.put("/:todoId/toggle", authMiddleware, toggleTodo);
+router.route("/:todoId/toggle").put(authMiddleware, toggleTodo);
 
 export default router;
