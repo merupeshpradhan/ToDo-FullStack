@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { FaCheck } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
@@ -8,7 +8,6 @@ import TodoInput from "../../components/CreateTodo/TodoInput";
 import Navbar from "../../components/Navbar/Navbar.jsx";
 
 function TodoList() {
-  const [loading, setLoading] = useState(false);
   const [Todos, setTodos] = useState([]);
   const navigate = useNavigate();
 
@@ -57,6 +56,11 @@ function TodoList() {
 
     fetchTodo();
   }, []);
+
+  // Add the newly created todo to the list
+  const addNewTodoToList = (newTodo) => {
+    setTodos((prev) => [newTodo, ...prev]);
+  };
 
   const toggleCheck = async (id) => {
     const token = localStorage.getItem("accessToken");
@@ -130,9 +134,14 @@ function TodoList() {
       </div>
       <div className="h-[88vh] pt-4 flex flex-col items-center">
         <div className="flex justify-center items-center flex-col">
-          <TodoInput />
+          <TodoInput onTodoCreated={addNewTodoToList} />
         </div>
-        <div className="mt-5 w-[30%] border-2 border-yellow-500 h-[74vh] rounded-md overflow-y-auto">
+        <div
+          className="mt-5 w-[30%] border-2 border-yellow-500 h-[74vh] rounded-md overflow-y-auto
+            [&::-webkit-scrollbar]:w-1.5
+            [&::-webkit-scrollbar-track]:bg-gray-200 [&::-webkit-scrollbar-track]:rounded-md
+            [&::-webkit-scrollbar-thumb]:bg-green-500 [&::-webkit-scrollbar-thumb]:rounded-md"
+        >
           {Todos.map((todo) => (
             <div
               key={todo._id}

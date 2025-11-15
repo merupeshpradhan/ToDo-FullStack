@@ -3,9 +3,8 @@ import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-function TodoInput() {
+function TodoInput({onTodoCreated }) {
   const [inputData, setInputData] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const createTodo = async (e) => {
     e.preventDefault();
@@ -29,10 +28,13 @@ function TodoInput() {
         render: "To-Do Created successfully!",
         type: "success",
         isLoading: false,
-        autoClose: 2000,
+        autoClose: 3000,
       });
 
       setInputData("");
+
+      onTodoCreated(res.data.data)
+      
     } catch (error) {
       console.log(error);
 
