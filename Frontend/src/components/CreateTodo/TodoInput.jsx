@@ -52,13 +52,13 @@ function TodoInput() {
         value={inputData}
         onChange={(e) => setInputData(e.target.value)}
         placeholder="Add a new task..."
-        className="w-[320px] border border-green-700 px-2 py-1 text-lg rounded outline-none tracking-wider font-serif"
+        className="w-[370px] border-2 border-green-600 px-2 py-1 text-lg rounded outline-none tracking-wider font-serif"
       />
       <button
         onClick={createTodo}
         className="w-14 h-9 bg-green-600/80 hover:bg-green-600 text-white flex justify-center items-center rounded cursor-pointer transition duration-200 ease-in-out"
       >
-        <FaPlus size={17} />
+        <FaPlus size={18} />
       </button>
     </div>
   );

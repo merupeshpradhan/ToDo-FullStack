@@ -111,13 +111,18 @@ function TodoList() {
       <div className="mb-5">
         <Navbar />
       </div>
-      <div className="p-5 flex flex-col items-center">
+      <div className="h-[88vh] pt-4 flex flex-col items-center">
         <div className="flex justify-center items-center flex-col">
           <TodoInput />
         </div>
         <div className="mt-5 w-[30%] border-2 border-yellow-500 h-[74vh] rounded-md overflow-y-auto">
           {Todos.map((todo) => (
-            <div className="border-2 border-green-500 p-2 rounded-sm flex items-center justify-between gap-5 my-4 mx-5">
+            <div
+              key={todo._id}
+              className={`p-2 rounded-sm flex items-center justify-between gap-5 my-4 mx-5 border-2 ${
+                checkedTodos[todo._id] ? "border-green-500" : "border-red-500"
+              }`}
+            >
               <h1 className="text-md tracking-wide font-semibold break-all">
                 {todo.title}
               </h1>
