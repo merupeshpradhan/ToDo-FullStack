@@ -13,6 +13,10 @@ const todoSchema = new Schema(
       // Login required to create Todo
       required: true,
     },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

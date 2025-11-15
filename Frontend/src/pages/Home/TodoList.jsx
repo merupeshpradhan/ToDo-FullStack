@@ -11,7 +11,6 @@ function TodoList() {
   const [loading, setLoading] = useState(false);
   const [Todos, setTodos] = useState([]);
   const navigate = useNavigate();
-  const [checkedTodos, setCheckedTodos] = useState({});
 
   useEffect(() => {
     const fetchTodo = async () => {
@@ -59,11 +58,29 @@ function TodoList() {
     fetchTodo();
   }, []);
 
-  const toggleCheck = (id) => {
-    setCheckedTodos((prev) => ({
-      ...prev,
-      [id]: !prev[id], // toggle true/false
-    }));
+  const toggleCheck = async (id) => {
+    const token = localStorage.getItem("accessToken");
+
+    try {
+      const res = await axios.put(
+        `http://localhost:4000/api/v1/todo/${id}/toggle`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      const updatedTodo = res.data.data;
+
+      setTodos((prev) =>
+        prev.map((todo) => (todo._id === id ? updatedTodo : todo))
+      );
+    } catch (error) {
+      console.log("Toggle failed", error);
+    }
   };
 
   const deleteTodo = async (todoId) => {
@@ -120,7 +137,7 @@ function TodoList() {
             <div
               key={todo._id}
               className={`p-2 rounded-sm flex items-center justify-between gap-5 my-4 mx-5 border-2 ${
-                checkedTodos[todo._id] ? "border-green-500" : "border-red-500"
+                todo.isCompleted ? "border-green-500" : "border-red-500"
               }`}
             >
               <h1 className="text-md tracking-wide font-semibold break-all">
@@ -129,14 +146,15 @@ function TodoList() {
               <div className="flex items-center gap-3">
                 <div
                   className={`border w-5 h-5 flex items-center justify-center rounded cursor-pointer ${
-                    checkedTodos[todo._id]
+                    todo.isCompleted
                       ? "bg-green-600 text-white"
                       : "text-green-600"
                   }`}
                   onClick={() => toggleCheck(todo._id)}
                 >
-                  {checkedTodos[todo._id] && <FaCheck size={13} />}
+                  {todo.isCompleted && <FaCheck size={13} />}
                 </div>
+
                 <div
                   onClick={() => deleteTodo(todo._id)}
                   className="text-red-600 cursor-pointer"

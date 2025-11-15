@@ -27,6 +27,23 @@ const getAllTodos = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, todos, "Fetched all To-Dos Successfully."));
 });
 
+const toggleTodo = asyncHandler(async (req, res) => {
+  const { todoId } = req.params;
+
+  const todo = await Todo.findById(todoId);
+  if (!todo) {
+    throw new ApiError(404, "To-Do not found.");
+  }
+
+  // Toggle status
+  todo.isCompleted = !todo.isCompleted;
+  await todo.save();
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, todo, "Todo status updated"));
+});
+
 const deleteTodo = asyncHandler(async (req, res) => {
   const { todoId } = req.params;
 
@@ -43,4 +60,4 @@ const deleteTodo = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "To-Do has been successfully deleted."));
 });
 
-export { createTodo, getAllTodos, deleteTodo };
+export { createTodo, getAllTodos, deleteTodo, toggleTodo };
