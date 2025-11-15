@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa";
-import TodoInput from "../../components/CreateTodo/TodoInput";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import TodoInput from "../../components/CreateTodo/TodoInput";
+import Navbar from "../../components/Navbar/Navbar.jsx";
 
 function TodoList() {
   const [loading, setLoading] = useState(false);
@@ -105,69 +106,42 @@ function TodoList() {
     }
   };
 
-  const handleLogout = async (e) => {
-    const toastId = toast.loading("Logging out");
-    try {
-      const res = await axios.post(
-        "http://localhost:4000/api/v1/users/logout",
-        {},
-        { withCredentials: true }
-      );
-      toast.update(toastId, {
-        render: "Logged out successfully!",
-        type: "success",
-        isLoading: false,
-        autoClose: 2000,
-      });
-
-      navigate("/");
-    } catch (error) {
-      console.log("Logout failed:", error);
-      toast.update(toastId, {
-        render: "Faild to get Logout",
-        type: "error",
-        isLoading: false,
-        autoClose: 2000,
-      });
-    }
-  };
   return (
-    <div className="p-5 flex flex-col items-center">
-      <div className="flex justify-center items-center flex-col">
-        <TodoInput />
-        <button
-          onClick={handleLogout}
-          className="mt-5 py-1 border border-red-500 w-[20%] hover:bg-red-700 cursor-pointer hover:text-white tracking-wider font-semibold rounded-sm"
-        >
-          Logout
-        </button>
+    <div className="all-field bg-purple-100">
+      <div className="mb-5">
+        <Navbar />
       </div>
-      <div className="mt-10 w-[30%] h-[70vh] border rounded-md overflow-y-auto ">
-        {Todos.map((todo) => (
-          <div className="border-2 p-2 rounded-sm flex items-center justify-between gap-5 my-4 mx-5">
-            <h1 className="text-md tracking-wide font-semibold break-all">
-              {todo.title}
-            </h1>
-            <div className="flex items-center gap-3">
-              <div
-                className={`border w-5 h-5 flex items-center justify-center rounded cursor-pointer ${
-                  checkedTodos[todo._id]
-                    ? "bg-green-600 text-white"
-                    : "text-green-600"
-                }`}
-                onClick={() => toggleCheck(todo._id)}
-              >
-                {checkedTodos[todo._id] && <FaCheck size={13} />}
-              </div>
-              <div
-                onClick={() => deleteTodo(todo._id)}
-                className="text-red-600 cursor-pointer"
-              >
-                <MdDelete size={23} />
+      <div className="p-5 flex flex-col items-center">
+        <div className="flex justify-center items-center flex-col">
+          <TodoInput />
+        </div>
+        <div className="mt-5 w-[30%] border-2 border-yellow-500 h-[74vh] rounded-md overflow-y-auto">
+          {Todos.map((todo) => (
+            <div className="border-2 border-green-500 p-2 rounded-sm flex items-center justify-between gap-5 my-4 mx-5">
+              <h1 className="text-md tracking-wide font-semibold break-all">
+                {todo.title}
+              </h1>
+              <div className="flex items-center gap-3">
+                <div
+                  className={`border w-5 h-5 flex items-center justify-center rounded cursor-pointer ${
+                    checkedTodos[todo._id]
+                      ? "bg-green-600 text-white"
+                      : "text-green-600"
+                  }`}
+                  onClick={() => toggleCheck(todo._id)}
+                >
+                  {checkedTodos[todo._id] && <FaCheck size={13} />}
+                </div>
+                <div
+                  onClick={() => deleteTodo(todo._id)}
+                  className="text-red-600 cursor-pointer"
+                >
+                  <MdDelete size={23} />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
