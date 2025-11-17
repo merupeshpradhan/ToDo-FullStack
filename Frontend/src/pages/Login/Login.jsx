@@ -69,10 +69,13 @@ function Login() {
     >
       <div className="bg-white p-8 rounded-2xl shadow-lg w-[350px]">
         {/* Top Icon */}
-        <div className="flex justify-center mb-6">
-          <div className="bg-cyan-400 p-4 rounded-full">
-            <FaUser className="w-8 h-8 text-white" />
+        <div className="flex flex-col items-center justify-center mb-6 gap-1">
+          <div className="bg-fuchsia-400 p-4 rounded-full">
+            <FaUser className="w-6 h-6 text-white" />
           </div>
+          <h1 className="text-transparent bg-clip-text bg-linear-330 from-cyan-600 to-cyan-200 font-bold text-2xl tracking-widest">
+            TaskFlow
+          </h1>
         </div>
 
         <form onSubmit={userLogin}>
@@ -82,7 +85,7 @@ function Login() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            className="w-full mb-4 px-4 py-2 border border-gray-400 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400"
           />
 
           {/* Password Input */}
@@ -92,12 +95,12 @@ function Login() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="w-full px-4 py-2 border border-gray-400 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-2 flex items-center text-[15px] justify-center text-gray-500 hover:text-gray-700"
+              className="absolute inset-y-0 right-2 flex items-center text-[15px] justify-center text-gray-500 hover:text-gray-700 cursor-pointer"
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>

@@ -30,7 +30,7 @@ const userSignup = asyncHandler(async (req, res) => {
   return res
     .status(201)
     .json(
-      new ApiResponse(201, userData, "Welcome to our To-Do website, User!")
+      new ApiResponse(201, userData, "Welcome to TaskFlow, User!")
     );
 });
 
@@ -76,7 +76,7 @@ const userLogin = asyncHandler(async (req, res) => {
       new ApiResponse(
         201,
         userData,
-        `Hello ${userData.userName}, Welcome to To-Do`
+        `Hello ${userData.userName}, Welcome to TaskFlow`
       )
     );
 });

@@ -63,10 +63,13 @@ function Signup() {
     <div className="flex items-center justify-center min-h-screen bg-linear-to-t from-indigo-400 to-pink-300">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-[350px]">
         {/* Top Icon */}
-        <div className="flex justify-center  mb-6">
+        <div className="flex flex-col items-center justify-center mb-6 gap-1">
           <div className="bg-indigo-400 p-4 rounded-full">
-            <FaUserPlus className="w-8 h-8 text-white" />
+            <FaUserPlus className="w-6 h-6 text-white" />
           </div>
+          <h1 className="text-transparent bg-clip-text bg-linear-330 from-cyan-600 to-cyan-200 font-bold text-2xl tracking-widest">
+            TaskFlow
+          </h1>
         </div>
 
         <form onSubmit={userSignup}>
@@ -100,7 +103,7 @@ function Signup() {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-2 flex items-center text-[15px] justify-center text-gray-500 hover:text-gray-700"
+              className="absolute inset-y-0 right-2 flex items-center text-[15px] justify-center text-gray-500 hover:text-gray-700 cursor-pointer"
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>

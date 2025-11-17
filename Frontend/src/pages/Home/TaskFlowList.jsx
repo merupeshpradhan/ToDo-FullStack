@@ -8,11 +8,11 @@ import TodoInput from "../../components/CreateTodo/TodoInput.jsx";
 import Navbar from "../../components/Navbar/Navbar.jsx";
 
 function TaskFlowList() {
-  const [Todos, setTodos] = useState([]);
+  const [Tasks, setTasks] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchTodo = async () => {
+    const fetchTasks = async () => {
       const toastId = toast.loading("Fetching Stack...");
 
       try {
@@ -32,9 +32,9 @@ function TaskFlowList() {
         console.log("All Tasks", res);
 
         if (res.data.data) {
-          setTodos(res.data.data);
+          setTasks(res.data.data);
         } else {
-          setTodos([]);
+          setTasks([]);
         }
 
         toast.update(toastId, {
@@ -44,7 +44,7 @@ function TaskFlowList() {
           autoClose: 2000,
         });
       } catch (error) {
-        console.log("Failed to get To-Do", error);
+        console.log("Failed to get Tasks", error);
         toast.update(toastId, {
           render: "Unable to fetch tasks",
           type: "error",
@@ -54,12 +54,12 @@ function TaskFlowList() {
       }
     };
 
-    fetchTodo();
+    fetchTasks();
   }, []);
 
   // Add the newly created todo to the list
-  const addNewTodoToList = (newTodo) => {
-    setTodos((prev) => [newTodo, ...prev]);
+  const addNewTaskToList = (newTask) => {
+    setTasks((prev) => [newTask, ...prev]);
   };
 
   const toggleCheck = async (id) => {
@@ -81,7 +81,7 @@ function TaskFlowList() {
 
       const updatedTask = res.data.data;
 
-      setTodos((prev) =>
+      setTasks((prev) =>
         prev.map((task) => (task._id === id ? updatedTask : task))
       );
 
@@ -105,7 +105,7 @@ function TaskFlowList() {
     }
   };
 
-  const deleteTodo = async (todoId) => {
+  const deleteTask = async (taskId) => {
     // create a loading toast
     const toastId = toast.loading("Deleting To-Do...");
 
@@ -113,7 +113,7 @@ function TaskFlowList() {
 
     try {
       const res = await axios.delete(
-        `http://localhost:4000/api/v1/tasks/${todoId}`,
+        `http://localhost:4000/api/v1/tasks/${taskId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -134,7 +134,7 @@ function TaskFlowList() {
       });
 
       // remove from UI
-      setTodos((prev) => prev.filter((todo) => todo._id !== todoId));
+      setTasks((prev) => prev.filter((task) => task._id !== taskId));
     } catch (error) {
       console.log("Delete failed:", error);
 
@@ -154,7 +154,7 @@ function TaskFlowList() {
       </div>
       <div className="h-[88vh] pt-4 flex flex-col items-center">
         <div className="flex justify-center items-center flex-col">
-          <TodoInput onTodoCreated={addNewTodoToList} />
+          <TodoInput onTaskCreated={addNewTaskToList} />
         </div>
         <div
           className="mt-5 w-[30%] border-2 border-yellow-500 h-[74vh] rounded-md overflow-y-auto
@@ -162,30 +162,30 @@ function TaskFlowList() {
             [&::-webkit-scrollbar-track]:bg-gray-200 [&::-webkit-scrollbar-track]:rounded-md
             [&::-webkit-scrollbar-thumb]:bg-green-500 [&::-webkit-scrollbar-thumb]:rounded-md"
         >
-          {Todos.map((todo) => (
+          {Tasks.map((task) => (
             <div
-              key={todo._id}
+              key={task._id}
               className={`p-2 rounded-sm flex items-center justify-between gap-5 my-4 mx-5 border-2 ${
-                todo.isCompleted ? "border-green-500" : "border-red-500"
+                task.isCompleted ? "border-green-500" : "border-red-500"
               }`}
             >
               <h1 className="text-md tracking-wide font-semibold break-all">
-                {todo.title}
+                {task.title}
               </h1>
               <div className="flex items-center gap-3">
                 <div
                   className={`border w-5 h-5 flex items-center justify-center rounded cursor-pointer ${
-                    todo.isCompleted
+                    task.isCompleted
                       ? "bg-green-600 text-white"
                       : "text-green-600"
                   }`}
-                  onClick={() => toggleCheck(todo._id)}
+                  onClick={() => toggleCheck(task._id)}
                 >
-                  {todo.isCompleted && <FaCheck size={13} />}
+                  {task.isCompleted && <FaCheck size={13} />}
                 </div>
 
                 <div
-                  onClick={() => deleteTodo(todo._id)}
+                  onClick={() => deleteTask(task._id)}
                   className="text-red-600 cursor-pointer"
                 >
                   <MdDelete size={23} />
